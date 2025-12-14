@@ -6,8 +6,27 @@
 #include "memlayout.h"
 #include "mmu.h"
 #include "proc.h"
+#include "spinlock.h"
+#include "syscall.h"
 
+extern int contador_llamadas[];
+extern int nsyscalls;
+extern struct spinlock contador_lock;
 extern int proc_contar_activos(void);
+
+int
+sys_contador(void)
+{
+  int n;
+
+  if(argint(0, &n) < 0)
+    return -1;
+
+  if(n < 0 || n >= nsyscalls)
+    return -1;
+
+  return contador_llamadas[n];
+}
 
 int
 sys_fork(void)

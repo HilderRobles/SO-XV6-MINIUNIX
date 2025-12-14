@@ -6,8 +6,10 @@
 #include "proc.h"
 #include "x86.h"
 #include "syscall.h"
+#include "spinlock.h"
 
 extern int sys_estado_sistema(void);
+
 
 // User code makes a system call with INT T_SYSCALL.
 // System call number in %eax.
@@ -106,6 +108,7 @@ extern int sys_wait(void);
 extern int sys_write(void);
 extern int sys_uptime(void);
 extern int sys_rastrear(void);
+extern int sys_contador(void);
 
 static int (*syscalls[])(void) = {
 [SYS_fork]    sys_fork,
@@ -131,6 +134,7 @@ static int (*syscalls[])(void) = {
 [SYS_close]   sys_close,
 [SYS_rastrear] sys_rastrear,
 [SYS_estado_sistema]  sys_estado_sistema,
+[SYS_contador] sys_contador,  // Agregar la nueva syscall
 };
 
 // Tabla de nombres de syscalls (Asegura que el índice coincida con el SYS_ número)
@@ -157,8 +161,13 @@ static char *nombres_syscall[] = {
   "link",       // 19
   "mkdir",      // 20
   "close",      // 21
-  "rastrear"    // 22 (Tu nueva syscall)
+  "rastrear",    // 22 (Tu nueva syscall)
+  "contador"  
 };
+
+int nsyscalls = NELEM(syscalls);
+int contador_llamadas[NELEM(syscalls)];
+struct spinlock contador_lock;
 
 void syscall(void)
 {
@@ -167,7 +176,6 @@ void syscall(void)
 
   num = curproc->tf->eax;
   if(num > 0 && num < NELEM(syscalls) && syscalls[num]) {
-
     // registrar la syscall si el rastreo está activo
     if (curproc->rastrear_activo) {
         int arg1 = 0, arg2 = 0, arg3 = 0; 
@@ -180,7 +188,8 @@ void syscall(void)
         cprintf("PID %d (%s) SYSCALL %s(0x%x, 0x%x, 0x%x) -> ", 
                 curproc->pid, curproc->name, nombres_syscall[num], arg1, arg2, arg3);
     }
-
+    
+    contador_llamadas[num]++;
     // ejecutar la llamada al sistema
     curproc->tf->eax = syscalls[num]();
 

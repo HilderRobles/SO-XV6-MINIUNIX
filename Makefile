@@ -182,7 +182,8 @@ UPROGS=\
 	_wc\
 	_zombie\
 	_rastrear\
-	_estado_proc
+	_estado_proc\
+	_contador
 
 fs.img: mkfs README $(UPROGS)
 	./mkfs fs.img README $(UPROGS)

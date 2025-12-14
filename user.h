@@ -23,7 +23,7 @@ int getpid(void);
 char* sbrk(int);
 int sleep(int);
 int uptime(void);
-
+int contador(int);
 // ulib.c
 int stat(const char*, struct stat*);
 char* strcpy(char*, const char*);
@@ -39,3 +39,4 @@ void free(void*);
 int atoi(const char*);
 int rastrear(int); // nueva implementación de la llamada al sistema rastrear
 int estado_sistema(void); // Nueva implementación de la llamada al sistema estado_sistema
+int contador_llamadas(void);

@@ -7,6 +7,7 @@
 #include "proc.h"
 #include "spinlock.h"
 
+extern struct spinlock contador_lock;
 struct {
   struct spinlock lock;
   struct proc proc[NPROC];
@@ -24,6 +25,7 @@ void
 pinit(void)
 {
   initlock(&ptable.lock, "ptable");
+  initlock(&contador_lock, "contador_llamadas");
 }
 
 // Must be called with interrupts disabled
