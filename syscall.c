@@ -103,6 +103,7 @@ extern int sys_unlink(void);
 extern int sys_wait(void);
 extern int sys_write(void);
 extern int sys_uptime(void);
+extern int sys_rastrear(void);
 
 static int (*syscalls[])(void) = {
 [SYS_fork]    sys_fork,
@@ -126,17 +127,65 @@ static int (*syscalls[])(void) = {
 [SYS_link]    sys_link,
 [SYS_mkdir]   sys_mkdir,
 [SYS_close]   sys_close,
+[SYS_rastrear] sys_rastrear
 };
 
-void
-syscall(void)
+// Tabla de nombres de syscalls (Asegura que el índice coincida con el SYS_ número)
+static char *nombres_syscall[] = {
+  "ERROR",      // 0 (índice 0 no usado)
+  "fork",       // 1
+  "exit",       // 2
+  "wait",       // 3
+  "pipe",       // 4
+  "read",       // 5
+  "kill",       // 6
+  "exec",       // 7
+  "fstat",      // 8
+  "chdir",      // 9
+  "dup",        // 10
+  "getpid",     // 11
+  "sbrk",       // 12
+  "sleep",      // 13
+  "uptime",     // 14
+  "open",       // 15
+  "write",      // 16
+  "mknod",      // 17
+  "unlink",     // 18
+  "link",       // 19
+  "mkdir",      // 20
+  "close",      // 21
+  "rastrear"    // 22 (Tu nueva syscall)
+};
+
+void syscall(void)
 {
   int num;
   struct proc *curproc = myproc();
 
   num = curproc->tf->eax;
   if(num > 0 && num < NELEM(syscalls) && syscalls[num]) {
+
+    // registrar la syscall si el rastreo está activo
+    if (curproc->rastrear_activo) {
+        int arg1 = 0, arg2 = 0, arg3 = 0; 
+        
+        // obtener argumentos 
+        argint(0, &arg1);
+        argint(1, &arg2);
+        argint(2, &arg3);
+
+        cprintf("PID %d (%s) SYSCALL %s(0x%x, 0x%x, 0x%x) -> ", 
+                curproc->pid, curproc->name, nombres_syscall[num], arg1, arg2, arg3);
+    }
+
+    // ejecutar la llamada al sistema
     curproc->tf->eax = syscalls[num]();
+
+    // imprimir el valor de retorno
+    if (curproc->rastrear_activo) {
+        cprintf("0x%x\n", curproc->tf->eax);
+    }
+
   } else {
     cprintf("%d %s: unknown sys call %d\n",
             curproc->pid, curproc->name, num);

@@ -89,3 +89,18 @@ sys_uptime(void)
   release(&tickslock);
   return xticks;
 }
+
+// Nueva llamada al sistema: rastrear(int alternar)
+int sys_rastrear(void)
+{
+  int alternar; // puede tomar solo 0-1
+  struct proc *curproc = myproc();
+
+  if(argint(0, &alternar) < 0)
+    return -1; // Error si no se puede leer
+
+  // establecer el flag de rastreo al valor del argumento
+  curproc->rastrear_activo = alternar;
+
+  return 0;
+}
