@@ -7,6 +7,8 @@
 #include "x86.h"
 #include "syscall.h"
 
+extern int sys_estado_sistema(void);
+
 // User code makes a system call with INT T_SYSCALL.
 // System call number in %eax.
 // Arguments on the stack, from the user call to the C
@@ -127,7 +129,8 @@ static int (*syscalls[])(void) = {
 [SYS_link]    sys_link,
 [SYS_mkdir]   sys_mkdir,
 [SYS_close]   sys_close,
-[SYS_rastrear] sys_rastrear
+[SYS_rastrear] sys_rastrear,
+[SYS_estado_sistema]  sys_estado_sistema,
 };
 
 // Tabla de nombres de syscalls (Asegura que el índice coincida con el SYS_ número)

@@ -21,3 +21,4 @@
 #define SYS_mkdir  20
 #define SYS_close  21
 #define SYS_rastrear 22  // nueva llamada al sistema rastrear
+#define SYS_estado_sistema  23 // nueva llamada al estado del sistema

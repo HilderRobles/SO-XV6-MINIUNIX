@@ -37,4 +37,5 @@ void* memset(void*, int, uint);
 void* malloc(uint);
 void free(void*);
 int atoi(const char*);
-int rastrear(int); // Nueva implementación de la llamada al sistema rastrear
+int rastrear(int); // nueva implementación de la llamada al sistema rastrear
+int estado_sistema(void); // Nueva implementación de la llamada al sistema estado_sistema

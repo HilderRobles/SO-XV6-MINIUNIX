@@ -53,6 +53,9 @@ struct proc {
   int rastrear_activo;         // si el rastreo está activo para el proceso o no
 };
 
+// Declaración de función para el Entregable 2
+int proc_contar_activos(void);
+
 // Process memory is laid out contiguously, low addresses first:
 //   text
 //   original data and bss

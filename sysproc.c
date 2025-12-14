@@ -7,6 +7,8 @@
 #include "mmu.h"
 #include "proc.h"
 
+extern int proc_contar_activos(void);
+
 int
 sys_fork(void)
 {
@@ -103,4 +105,11 @@ int sys_rastrear(void)
   curproc->rastrear_activo = alternar;
 
   return 0;
+}
+
+int
+sys_estado_sistema(void)
+{
+  // Llama a la funcion proc_contar_activos() que hicimos en proc.c
+  return proc_contar_activos(); 
 }

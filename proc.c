@@ -496,6 +496,28 @@ kill(int pid)
   return -1;
 }
 
+// Cuenta el número de procesos en estados activos (no UNUSED)
+int
+proc_contar_activos(void)
+{
+  struct proc *p;
+  int cuenta = 0;
+
+  acquire(&ptable.lock);
+
+  // Recorre toda la tabla de procesos
+  for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
+    // Contar cualquier proceso que esté siendo utilizado.
+    // UNUSED es el único estado que no queremos contar.
+    if(p->state != UNUSED) { 
+        cuenta++;
+    }
+  }
+
+  release(&ptable.lock);
+  return cuenta;
+}
+
 //PAGEBREAK: 36
 // Print a process listing to console.  For debugging.
 // Runs when user types ^P on console.
