@@ -26,7 +26,8 @@ char *nombres[] = {
   "close",
   "ratrear",
   "estado",
-  "contador"
+  "contador",
+  "proceso info"
 };
 
 int
@@ -38,7 +39,7 @@ main(int argc, char *argv[])
     printf(1, "syscall %d (%s): %d\n",
            n, nombres[n], r);
   } else {
-    for(int i = 1; i < 25; i++){
+    for(int i = 1; i < 26; i++){
       printf(1, "syscall %d (%s): %d\n",
              i, nombres[i], contador(i));
     }

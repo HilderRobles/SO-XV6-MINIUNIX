@@ -15,6 +15,26 @@ extern struct spinlock contador_lock;
 extern int proc_contar_activos(void);
 
 int
+sys_psinfo(void)
+{
+  int *pids;
+  int *states;
+  char *names;
+  int max;
+
+  if(argptr(0, (void*)&pids, sizeof(int)) < 0)
+    return -1;
+  if(argptr(1, (void*)&states, sizeof(int)) < 0)
+    return -1;
+  if(argptr(2, (void*)&names, sizeof(char)) < 0)
+    return -1;
+  if(argint(3, &max) < 0)
+    return -1;
+
+  return getpsinfo(pids, states, names, max);
+}
+
+int
 sys_contador(void)
 {
   int n;

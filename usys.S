@@ -32,3 +32,4 @@ SYSCALL(uptime)
 SYSCALL(rastrear) // nueva llamada al sistema 
 SYSCALL(estado_sistema) 
 SYSCALL(contador)
+SYSCALL(psinfo)

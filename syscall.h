@@ -23,3 +23,4 @@
 #define SYS_rastrear 22  // nueva llamada al sistema rastrear
 #define SYS_estado_sistema  23 // nueva llamada al estado del sistema
 #define SYS_contador 24 
+#define SYS_psinfo 25

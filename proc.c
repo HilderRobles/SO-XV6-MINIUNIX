@@ -556,3 +556,24 @@ procdump(void)
     cprintf("\n");
   }
 }
+
+int
+getpsinfo(int *pids, int *states, char *names, int max)
+{
+  struct proc *p;
+  int n = 0;
+
+  acquire(&ptable.lock);
+  for(p = ptable.proc; p < &ptable.proc[NPROC] && n < max; p++){
+    if(p->state == UNUSED)
+      continue;
+
+    pids[n] = p->pid;
+    states[n] = p->state;
+    safestrcpy(&names[n*16], p->name, 16);
+    n++;
+  }
+  release(&ptable.lock);
+
+  return n;
+}

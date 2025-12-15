@@ -109,6 +109,7 @@ extern int sys_write(void);
 extern int sys_uptime(void);
 extern int sys_rastrear(void);
 extern int sys_contador(void);
+extern int sys_psinfo(void);
 
 static int (*syscalls[])(void) = {
 [SYS_fork]    sys_fork,
@@ -135,6 +136,7 @@ static int (*syscalls[])(void) = {
 [SYS_rastrear] sys_rastrear,
 [SYS_estado_sistema]  sys_estado_sistema,
 [SYS_contador] sys_contador,  // Agregar la nueva syscall
+[SYS_psinfo] sys_psinfo,
 };
 
 // Tabla de nombres de syscalls (Asegura que el índice coincida con el SYS_ número)
@@ -162,7 +164,8 @@ static char *nombres_syscall[] = {
   "mkdir",      // 20
   "close",      // 21
   "rastrear",    // 22 (Tu nueva syscall)
-  "contador"  
+  "contador",    //23
+  "proceso info" //24
 };
 
 int nsyscalls = NELEM(syscalls);

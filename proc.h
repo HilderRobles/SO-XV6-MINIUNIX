@@ -55,7 +55,7 @@ struct proc {
 
 // Declaración de función para el Entregable 2
 int proc_contar_activos(void);
-
+int getpsinfo(int*, int*, char*, int);
 // Process memory is laid out contiguously, low addresses first:
 //   text
 //   original data and bss
