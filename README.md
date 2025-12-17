@@ -6,8 +6,8 @@ Aquí tienes una versión **más resumida, técnica y directa** del **README.md*
 
 ## Integrantes
 
-* [Nombre del integrante 1]
-* [Nombre del integrante 2]
+* Josue David Poma Sucso		    2022-119090
+* Hilder Elvis Robles Gonzales		2022-119014	
 
 ## Descripción
 
@@ -19,6 +19,14 @@ El proyecto consiste en la extensión del sistema operativo educativo **XV6** me
 * Contador de invocaciones por syscall (`contador`).
 * Inspección de procesos activos (`psinfo`).
 * Consulta del estado general del sistema y uptime.
+
+
+## Requisitos
+
+```bash
+sudo apt-get install build-essential gdb git gcc-multilib qemu-system-x86
+```
+
 
 ## Compilación
 
@@ -39,8 +47,6 @@ Comandos disponibles:
 contador
 contador <id_syscall>
 psinfo
+estado_proc
+rastrear <0 o 1> 1 activado y 0 desactivado el rastreo
 ```
-
----
-
-Si lo deseas, puedo **reducirlo aún más** o **adaptarlo exactamente al formato solicitado por tu docente**.
