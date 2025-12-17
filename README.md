@@ -1,7 +1,3 @@
-Aquí tienes una versión **más resumida, técnica y directa** del **README.md**, adecuada para una entrega académica:
-
----
-
 # Proyecto XV6 – Extensión del Kernel
 
 ## Integrantes
